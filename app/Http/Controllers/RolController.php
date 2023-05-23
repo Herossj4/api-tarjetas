@@ -20,7 +20,20 @@ class RolController extends Controller
     }
 
     public function getRolesActivos() {
-       $datos = \DB::select("select * from tb_roles where activo = 'S'");
+       $datos = \DB::select("select 
+       t.rol_privilegio_id,
+       t.rol_id,
+       r.rol,
+       t.modulo,
+       t.nombre_pantalla,
+       (select m.menu_id from vw_menu m where m.titulo = t.nombre_pantalla) menu_id,
+       t.consultar,
+       t.crear,
+       t.actualizar,
+       t.eliminar
+       from vw_roles_privilegios t
+       inner join tb_roles r on r.rol_id = t.rol_id
+       Order by r.rol;");
 
         $response = json_encode(array('result' => $datos, 'tipo' => 0), JSON_NUMERIC_CHECK);
         $response = json_decode($response);
@@ -31,7 +44,7 @@ class RolController extends Controller
     public function crearRol(Request $request) {
         $m = new Rol;
         $rol = $m->crud_roles($request, 'C');
-        if ($rol->id != 0) {
+        if ($rol->rol_id != 0) {
             $response = json_encode(array('mensaje' => 'Ha creado exitosamente.', 'tipo' => 0, 'rol_id' => $rol->rol_id), JSON_NUMERIC_CHECK);
             $response = json_decode($response);
 

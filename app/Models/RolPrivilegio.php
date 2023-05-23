@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class RolPrivilegio extends Model
 {
@@ -33,7 +34,7 @@ class RolPrivilegio extends Model
             $m->eliminar = $request->get('eliminar') == true ? 1 : 0;
             $m->activo = $request->get('activo') == true ? 1 : 0;
             $m->usuario_creador = $request->get('usuario');
-            $m->fecha_creacion = \DB::raw('GETDATE()');
+            $m->fecha_creacion = DB::raw('GETDATE()');
             $m->save();
 
             return $m;
@@ -49,7 +50,7 @@ class RolPrivilegio extends Model
             $m->eliminar = $request->get('eliminar') == true ? 1 : 0;
             $m->activo = $request->get('activo') == true ? 1 : 0;
             $m->usuario_modificador = $request->get('usuario');
-            $m->fecha_modificacion = \DB::raw('GETDATE()');
+            $m->fecha_modificacion = DB::raw('GETDATE()');
             $m->save();
 
             return $m;
@@ -57,7 +58,7 @@ class RolPrivilegio extends Model
     }
 
     public function get_roles_privilegios_by_rol_id(Request $request) {
-        $db = \DB::select('select * from tb_roles_privilegios where rol_id = :id order by rol_privilegio_id', array('id' => $request->get('rol_id')));
+        $db = DB::select('select * from tb_roles_privilegios where rol_id = :id order by rol_privilegio_id', array('id' => $request->get('rol_id')));
         
         return $db;
     }
@@ -70,7 +71,7 @@ class RolPrivilegio extends Model
     }
 
     public function get_modulos() {
-        $db = \DB::select("exec pr_get_modulos");
+        $db = DB::select("exec pr_get_modulos");
         
         return $db;
     }

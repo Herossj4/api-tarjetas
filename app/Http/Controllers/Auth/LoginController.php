@@ -4,7 +4,9 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\DB;
 
 use App\Models\Menu;
 use App\Models\Usuario;
@@ -16,8 +18,11 @@ class LoginController extends Controller
         $p_usuario = $request->get('usuario');
         $p_password = $request->get('password');
         
-        if ($p_password != null) {
-            $usuario = Usuario::where('usuario',$p_usuario)->first();
+        if (Auth::attempt(['usuario' => $p_usuario, 'password' => $p_password])) {
+            //$usuario = Usuario::where('usuario',$p_usuario)->first();
+            $usuario = Auth::user();
+
+            Log::info($usuario);
 
             $m_menu = new Menu;
             $m_usuariomenu = new UsuarioMenu;
@@ -33,5 +38,12 @@ class LoginController extends Controller
             $response = json_decode($response);
             return response()->json(array('user' => $response, 'tipo' => 0));
         }
+        else {
+            return response()->json(array('mensaje' => 'Usuario y/o contraseña no es correcto o puede que su usuario no este activo en este caso valide con el administrador', 'tipo' => -2));
+        }
+    }
+
+    public function logout(){
+        Auth::logout();
     }
 }

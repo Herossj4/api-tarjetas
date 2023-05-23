@@ -8,6 +8,8 @@ use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\UsuarioController;
 use App\Http\Controllers\RolController;
 use App\Http\Controllers\ListaController;
+use App\Http\Controllers\PersonaController;
+use App\Http\Controllers\UnidadesController;
 use App\Models\UsuarioRol;
 
 /*
@@ -16,18 +18,20 @@ use App\Models\UsuarioRol;
 |--------------------------------------------------------------------------
 */
 Route::get('/banner', [HomeController::class, 'getBanner']);
-
 Route::get('/menu', [MenuController::class, 'getMenu']);
-
 Route::post('login', [LoginController::class, 'login']);
+Route::any('logout', [LoginController::class, 'logout']);
+Route::post('password', [LoginController::class, 'cambioContraseña']);
 
 Route::group(['prefix' => 'admin'], function() {
     Route::get('usuarios', [UsuarioController::class, 'getUsuarios']);
     Route::post('usuarios/crearUsuario',[UsuarioController::class, 'CrearUsuarios']);
     Route::post('usuarios/actualizarUsuario',[UsuarioController::class, 'ActualizarUsuario']);
     Route::post('usuarios/busqueda', [UsuarioController::class, 'buscando']);
+    Route::post('usuarios/obtenerRolesAsignados', [UsuarioController::class, 'getRolesAsignados']);
     Route::post('usuarios/crearPrivilegios', [UsuarioController::class, 'CrearPrivilegios']);
     Route::post('usuarios/actualizarPrivilegios', [UsuarioController::class, 'ActualizarPrivilegios']);
+    Route::post('usuarios/cambiarContraseña', [UsuarioController::class, 'ChangePassword']);
 
     Route::get('roles', [RolController::class, 'getRoles']);
     Route::post('rol/crearRol', [RolController::class, 'crearRol']);
@@ -41,6 +45,19 @@ Route::group(['prefix' => 'admin'], function() {
 });
 
 Route::group(['prefix' => 'param'], function() {
+    //Personas
+    Route::get('persona', [PersonaController::class, 'getPersonas']);
+    Route::post('persona/crearpersona', [PersonaController::class, 'CrearPersonas']);
+    Route::post('persona/actualizarpersona', [PersonaController::class, 'actualizarPersona']);
+    Route::post('persona/upload', [PersonaController::class, 'upload']);
+
+    //Unidades
+    Route::get('unidad', [UnidadesController::class, 'getUnidades']);
+    Route::post('unidad/crearunidad', [UnidadesController::class, 'CrearUnidades']);
+    Route::post('unidad/actualizarunidad', [UnidadesController::class, 'actualizarUnidad']);
+    Route::post('unidad/obtenerunidadesByid', [UnidadesController::class, 'get_unidad_by_id']);
+
+    //Listas Dinamicas
     Route::get('listas', [ListaController::class,'getListas']);
     Route::post('lista/crearLista', [ListaController::class, 'crearLista']);
     Route::post('lista/actualizarLista', [ListaController::class, 'actualizarLista']);
@@ -52,5 +69,12 @@ Route::group(['prefix' => 'param'], function() {
 });
 
 Route::get('hello', function() {
-    return "Hello World";
+    $password = password_hash('0000', PASSWORD_BCRYPT, ['cost' => 15]);
+    return $password;
+});
+
+Route::post('prueba',function(Request $request){
+    $image = $request->file('image');
+    $path = $image->store('images', 'custom'); 
+    return $request + " " + $path;
 });

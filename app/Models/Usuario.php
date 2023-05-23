@@ -23,6 +23,8 @@ class Usuario extends Authenticatable
 
     public $timestamps = false; // created_at y updated_ad
 
+    protected $hidden = [ 'password' ];
+
     public function ObtenerUsuarios() {
         $db = Usuario::all()->sortBy('usuario_id');
 
@@ -36,6 +38,7 @@ class Usuario extends Authenticatable
             $Usuario->nombres = $request->get('nombres');
             $Usuario->apellidos = $request->get('apellidos');
             $Usuario->email = $request->get('email');
+            $Usuario->password = password_hash($request->get('password'), PASSWORD_BCRYPT, ['cost' => 15]);
             $Usuario->tipo_usuario = $request->get('tipo_usuario');
             $Usuario->estado = "S";
             $Usuario->usuario_creador = $request->get('usuario');
@@ -50,6 +53,7 @@ class Usuario extends Authenticatable
             $Usuario->nombres = $request->get('nombres');
             $Usuario->apellidos = $request->get('apellidos');
             $Usuario->email = $request->get('email');
+            //$Usuario->password = password_hash($request->get('password'), PASSWORD_BCRYPT, ['cost' => 15]);
             $Usuario->tipo_usuario = $request->get('tipo_usuario');
             $Usuario->estado = $request->get('estado');
             $Usuario->usuario_modificador = $request->get('usuario');
@@ -63,5 +67,15 @@ class Usuario extends Authenticatable
     public function Buscar(Request $request){
         $resultados = DB::select('exec buscarUsuarios ?', [ $request->get('busqueda')] );
         return $resultados;
+    }
+
+    public function cambioContraseña(Request $request) {
+        $pass = $request->get('password');
+        $password = password_hash($pass, PASSWORD_BCRYPT, ['cost' => 15]);
+        $usuario_id = $request->get('usuario_id');
+    
+        $db = DB::update('update tb_usuarios set password = ? where usuario_id = ?', [$password, $usuario_id]);
+    
+        return $db;
     }
 }

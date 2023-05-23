@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class ListaDetalle extends Model
 {
@@ -23,7 +24,7 @@ class ListaDetalle extends Model
     // }
 
      public function get_lista_by_id(Request $request) {
-        $db = \DB::select('select * from tb_listas_dinamicas ld where ld.nombre_lista_id = :id order by ld.lista_dinamica_id', array('id' => $request->get('id')));
+        $db = DB::select('select * from tb_listas_dinamicas ld where ld.nombre_lista_id = :id order by ld.lista_dinamica_id', array('id' => $request->get('id')));
         
         return $db;
      }
@@ -33,11 +34,13 @@ class ListaDetalle extends Model
             $Listas = new ListaDetalle;
             $Listas->nombre_lista_id = $request->get('nombre_lista_id');
             $Listas->lista_dinamica = $request->get('lista_dinamica');
+            $Listas->descripcion = $request->get('descripcion');
             $Listas->codigo = $request->get('codigo');
-            $Listas->lista_padre_id = $request->get('lista_padre_id');
-            $Listas->activo = 1;
+            $Listas->atributo1 = $request->get('atributo1');
+            $Listas->atributo2 = $request->get('atributo2');
+            $Listas->activo = $request->get('activo') == true ? 1 : 0;
             $Listas->usuario_creador = $request->get('usuario');
-            $Listas->fecha_creacion = \DB::raw('GETDATE()');
+            $Listas->fecha_creacion = DB::raw('GETDATE()');
             $Listas->save();            
 
             return $Listas;
@@ -46,11 +49,13 @@ class ListaDetalle extends Model
             $Listas = ListaDetalle::find($request->get('lista_dinamica_id'));
             $Listas->nombre_lista_id = $request->get('nombre_lista_id');
             $Listas->lista_dinamica = $request->get('lista_dinamica');
+            $Listas->descripcion = $request->get('descripcion');
             $Listas->codigo = $request->get('codigo');
-            $Listas->lista_padre_id = $request->get('lista_padre_id') == 0 ? null : $request->get('lista_padre_id');
+            $Listas->atributo1 = $request->get('atributo1');
+            $Listas->atributo2 = $request->get('atributo2');
             $Listas->activo = $request->get('activo') == true ? 1 : 0;
             $Listas->usuario_modificador = $request->get('usuario');
-            $Listas->fecha_modificacion = \DB::raw('GETDATE()');
+            $Listas->fecha_modificacion = DB::raw('GETDATE()');
             $Listas->save();
 
             return $Listas;

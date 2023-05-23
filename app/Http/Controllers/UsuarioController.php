@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 
 use App\Models\Usuario;
 use App\Models\UsuarioRol;
+use App\Models\UsuarioMenu;
 
 class UsuarioController extends Controller
 {
@@ -66,6 +67,16 @@ class UsuarioController extends Controller
         return response()->json($response, 200);
     }
 
+    public function getRolesAsignados(Request $request){
+        $m = new UsuarioMenu();
+        $datos = $m->ObtenerRolesAsignados($request);
+
+        $response = json_encode(array('result' => $datos, 'tipo' => 0), JSON_NUMERIC_CHECK);
+        $response = json_decode($response);
+
+        return response()->json($response, 200);
+    }
+
     public function CrearPrivilegios(Request $request) {
         $m = new UsuarioRol();
         $usuario = $m->crud_usuarios_roles($request, 'C');
@@ -98,5 +109,16 @@ class UsuarioController extends Controller
 
             return response()->json($response);
         }
+    }
+
+    public function ChangePassword(Request $request) {
+        $model = new Usuario();
+
+        $datos = $model->cambioContraseña($request);
+
+        $response = json_encode(array('result' => $datos, 'tipo' => 0), JSON_NUMERIC_CHECK);
+        $response = json_decode($response);
+
+        return response()->json($response, 200);
     }
 }

@@ -11,7 +11,7 @@ class UsuarioMenu extends Model
 {
     use HasFactory;
 
-    protected $table = 'tb_app_usuarios_menu';
+    protected $table = 'tb_usuarios_menu';
 
     protected $primaryKey = 'usuario_menu_id';
 
@@ -31,6 +31,12 @@ class UsuarioMenu extends Model
                         ]);
         return $db;
     }*/
+
+    public function ObtenerRolesAsignados(Request $request) {
+        $db = DB::select('select rol from tb_usuarios_menu where user_id = :id', array('id' => $request->get('user_id')));
+
+        return $db;
+    }
 
     public function getUsuarioMenu($usuario_id) {
         $db = DB::select("exec pr_get_usuarios_menu_id ?", array($usuario_id));

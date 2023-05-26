@@ -50,6 +50,8 @@ Route::group(['prefix' => 'param'], function() {
     Route::post('persona/crearpersona', [PersonaController::class, 'CrearPersonas']);
     Route::post('persona/actualizarpersona', [PersonaController::class, 'actualizarPersona']);
     Route::post('persona/upload', [PersonaController::class, 'upload']);
+    Route::get('personas/obtenerunidadespadre', [PersonaController::class, 'getUnidadesPadre']);
+    Route::post('personas/obtenerunidadeshijas', [PersonaController::class, 'getUnidadesHijas']);
 
     //Unidades
     Route::get('unidad', [UnidadesController::class, 'getUnidades']);

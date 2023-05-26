@@ -70,4 +70,25 @@ class PersonaController extends Controller
 
         return response()->json(['message' => 'No se seleccionó ninguna imagen'], 400);
     }
+
+    public function getUnidadesPadre() {
+        $datos = DB::select("select * from tb_unidades u where u.unidad_padre_id is null");
+
+        $response = json_encode(array('result' => $datos, 'tipo' => 0), JSON_NUMERIC_CHECK);
+        $response = json_decode($response);
+
+        return response()->json($response, 200);
+    }
+
+    
+    public function GetunidadesHijas(Request $request) {
+        $model = new Persona();
+
+        $datos = $model->GetUnidadesHijas($request);
+
+        $response = json_encode(array('result' => $datos, 'tipo' => 0), JSON_NUMERIC_CHECK);
+        $response = json_decode($response);
+
+        return response()->json($response, 200);
+    }
 }

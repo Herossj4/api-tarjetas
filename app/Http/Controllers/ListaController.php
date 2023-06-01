@@ -117,4 +117,15 @@ class ListaController extends Controller
             return response()->json($response);
         }
     }
+
+    public function getListasName(Request $request) {
+        $model = new ListaDetalle;
+
+        $datos = $model->get_lista_by_name($request);
+
+        $response = json_encode(array('result' => $datos, 'tipo' => 0), JSON_NUMERIC_CHECK);
+        $response = json_decode($response);
+
+        return response()->json($response, 200);
+    }
 }

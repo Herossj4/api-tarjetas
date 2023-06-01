@@ -23,7 +23,7 @@ class Rol extends Model
         if ($evento == 'C') {
             $rol = new Rol;
             $rol->rol = $request->get('rol');
-            $rol->descripcion = 'web';
+            $rol->descripcion = $request->get('descripcion');
             $rol->activo = 'S';
             $rol->fecha_creacion = DB::raw('GETDATE()');
             $rol->usuario_creador = DB::raw('user');
@@ -34,7 +34,7 @@ class Rol extends Model
         else if ($evento == 'U') {
             $rol = Rol::find($request->get('rol_id'));
             $rol->rol = $request->get('rol');
-            $rol->descripcion = 'web';
+            $rol->descripcion = $request->get('descripcion');
             $rol->activo = $request->get('activo') == true ? 'S' : 'N';
             $rol->fecha_modificacion = DB::raw('GETDATE()');
             $rol->save();

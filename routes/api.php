@@ -68,15 +68,25 @@ Route::group(['prefix' => 'param'], function() {
     Route::get('lista/getListaDetalleFull', [ListaController::class, 'getListaDetalleFull']);
     Route::post('lista/crearListaDetalle', [ListaController::class, 'crearListaDetalle']);
     Route::post('lista/actualizarListaDetalle', [ListaController::class, 'actualizarListaDetalle']);
+    Route::post('lista/getListasByName', [ListaController::class, 'getListasName']);
 });
 
-Route::get('hello', function() {
-    $password = password_hash('0000', PASSWORD_BCRYPT, ['cost' => 15]);
-    return $password;
-});
+// Route::get('hello', function() {
+//     $password = password_hash('0000', PASSWORD_BCRYPT, ['cost' => 15]);
+//     return $password;
+// });
 
 Route::post('prueba',function(Request $request){
     $image = $request->file('image');
     $path = $image->store('images', 'custom'); 
     return $request + " " + $path;
+});
+
+Route::get('/test-connection', function () {
+    try {
+        DB::connection()->getPdo();
+        return response()->json(['message' => 'Conexión exitosa']);
+    } catch (\Exception $e) {
+        return response()->json(['message' => 'Error de conexión: ' . $e->getMessage()], 500);
+    }
 });

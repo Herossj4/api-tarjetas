@@ -72,7 +72,7 @@ class PersonaController extends Controller
     }
 
     public function getUnidadesPadre() {
-        $datos = DB::select("select * from tb_unidades u where u.unidad_padre_id is null");
+        $datos = DB::select("select * from tb_unidades u where u.activo = 1 and u.unidad_padre_id is null");
 
         $response = json_encode(array('result' => $datos, 'tipo' => 0), JSON_NUMERIC_CHECK);
         $response = json_decode($response);

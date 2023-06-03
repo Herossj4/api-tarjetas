@@ -18,11 +18,12 @@ class Persona extends Model
         if ($evento == 'C') {
             $persona = new Persona;
             $persona->numero_identificacion = $request->get('numero_identificacion');
-            $persona->grado = $request->get('grado');
+            $persona->grado = $request->get('grado')== 0 ? null : $request->get('grado');
             $persona->nombres = $request->get('nombres');
             $persona->apellidos = $request->get('apellidos');
-            $persona->unidad = $request->get('unidad');
-            $persona->dependencia = $request->get('dependencia');
+            $persona->tipo_persona = $request->get('tipo_persona');
+            $persona->unidad = $request->get('unidad') == 0 ? null : $request->get('unidad');
+            $persona->dependencia = $request->get('dependencia') == 0 ? null : $request->get('dependencia');
             $persona->cargo = $request->get('cargo');
             $persona->usuario_creador = $request->get('usuario');
             $persona->fecha_creacion = DB::raw('GETDATE()');
@@ -52,11 +53,12 @@ class Persona extends Model
 
             $persona = Persona::find($request->persona_id);
             $persona->numero_identificacion = $request->get('numero_identificacion');
-            $persona->grado = $request->get('grado');
+            $persona->grado = $request->get('grado')== 0 ? null : $request->get('grado');
             $persona->nombres = $request->get('nombres');
             $persona->apellidos = $request->get('apellidos');
-            $persona->unidad = $request->get('unidad');
-            $persona->dependencia = $request->get('dependencia');
+            $persona->tipo_persona = $request->get('tipo_persona');
+            $persona->unidad = $request->get('unidad') == 0 ? null : $request->get('unidad');
+            $persona->dependencia = $request->get('dependencia') == 0 ? null : $request->get('dependencia');
             $persona->cargo = $request->get('cargo');
             $persona->usuario_modificador = $request->get('usuario');
             $persona->fecha_modificacion = DB::raw('GETDATE()');

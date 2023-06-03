@@ -32,6 +32,9 @@ Route::group(['prefix' => 'admin'], function() {
     Route::post('usuarios/crearPrivilegios', [UsuarioController::class, 'CrearPrivilegios']);
     Route::post('usuarios/actualizarPrivilegios', [UsuarioController::class, 'ActualizarPrivilegios']);
     Route::post('usuarios/cambiarContraseña', [UsuarioController::class, 'ChangePassword']);
+    Route::post('usuarios/crearAsignarMenu', [UsuarioController::class, 'crearAsignarMenu']);
+    Route::get('usuarios/getRolPrivilegiosPantalla', [UsuarioController::class, 'getRolPrivilegiosPantalla']);
+    Route::post('usuarios/getPermisos', [UsuarioController::class, 'getPermisos']);
 
     Route::get('roles', [RolController::class, 'getRoles']);
     Route::post('rol/crearRol', [RolController::class, 'crearRol']);

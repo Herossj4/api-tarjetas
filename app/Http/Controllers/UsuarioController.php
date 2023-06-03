@@ -7,6 +7,8 @@ use Illuminate\Http\Request;
 use App\Models\Usuario;
 use App\Models\UsuarioRol;
 use App\Models\UsuarioMenu;
+use App\Models\RolPrivilegio;
+use App\Models\Permiso;
 
 class UsuarioController extends Controller
 {
@@ -68,8 +70,8 @@ class UsuarioController extends Controller
     }
 
     public function getRolesAsignados(Request $request){
-        $m = new UsuarioMenu();
-        $datos = $m->ObtenerRolesAsignados($request);
+        $m = new UsuarioRol;
+        $datos = $m->get_usuarios_roles_by_usuario_id($request);
 
         $response = json_encode(array('result' => $datos, 'tipo' => 0), JSON_NUMERIC_CHECK);
         $response = json_decode($response);
@@ -115,6 +117,44 @@ class UsuarioController extends Controller
         $model = new Usuario();
 
         $datos = $model->cambioContraseña($request);
+
+        $response = json_encode(array('result' => $datos, 'tipo' => 0), JSON_NUMERIC_CHECK);
+        $response = json_decode($response);
+
+        return response()->json($response, 200);
+    }
+
+    public function getRolPrivilegiosPantalla() {
+        $m = new RolPrivilegio;
+        $datos = $m->get_roles_privilegios_pantalla();
+
+        $response = json_encode(array('result' => $datos, 'tipo' => 0), JSON_NUMERIC_CHECK);
+        $response = json_decode($response);
+
+        return response()->json($response, 200);
+    }
+
+    public function crearAsignarMenu(Request $request) {
+        $m = new UsuarioMenu;
+        $umenu = $m->crud_usuarios_menu($request);
+
+        if ($umenu[0]->id != 0) {
+            return response()->json(array('tipo' => 0, 'mensaje' => 'Fue creado exitosamente.', 'id' => $umenu[0]->id));
+        }
+        else {
+            return response()->json(array('tipo' => -1, 'mensaje' => 'Error guardado'));
+        }
+    }
+
+    public function getPermisos(Request $request) {
+        $p = new Permiso;
+        $permiso = $p->getPermisos($request);
+        
+        $datos = array();
+        $datos['consultar'] = $permiso->consultar;
+        $datos['crear'] = $permiso->crear;
+        $datos['actualizar'] = $permiso->actualizar;
+        $datos['eliminar'] = $permiso->eliminar;
 
         $response = json_encode(array('result' => $datos, 'tipo' => 0), JSON_NUMERIC_CHECK);
         $response = json_decode($response);

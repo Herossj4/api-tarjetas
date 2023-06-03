@@ -75,4 +75,10 @@ class RolPrivilegio extends Model
         
         return $db;
     }
+
+    public function get_roles_privilegios_pantalla() {
+        $db = DB::select('exec pr_rol_privilegios_pantalla');
+
+        return $db;
+    }
 }

@@ -54,13 +54,7 @@ class UsuarioRol extends Model
     }
 
     public function get_usuarios_roles_by_usuario_id(Request $request) {
-        $db = DB::select("exec pr_get_sg_adm_usuarios_roles_by_user_id ?", array($request->input('user_id')));
-
-        return $db;
-    }
-
-    public function get_rol_privilegios_pantalla() {
-        $db = DB::select("exec pr_get_rol_privilegios_pantalla");
+        $db = DB::select("exec get_usuarios_roles_by_usuario_id ?", array($request->input('usuario_id')));
 
         return $db;
     }

@@ -26,8 +26,7 @@ class Usuario extends Authenticatable
     protected $hidden = [ 'password' ];
 
     public function ObtenerUsuarios() {
-        $db = Usuario::all()->sortBy('usuario_id');
-
+        $db = DB::select("select * from tb_usuarios where usuario != 'admin'");
         return $db;
     }
 

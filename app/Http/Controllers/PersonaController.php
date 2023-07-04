@@ -68,25 +68,6 @@ class PersonaController extends Controller
         }
     }
 
-    public function upload(Request $request)
-    {
-        if ($request->hasFile('image')) {
-            $image = $request->file('image');
-            $path = $image->store('images', 'custom'); // Cambia 'local' por tu disco configurado
-
-            // Guardar la ruta en la base de datos
-            // Asegúrate de tener un modelo y una tabla correspondientes
-
-            // $rutaImagen = new RutaImagen();
-            // $rutaImagen->ruta = $path;
-            // $rutaImagen->save();
-
-            return response()->json(['message' => 'Imagen subida con éxito', 'ruta' => $path]);
-        }
-
-        return response()->json(['message' => 'No se seleccionó ninguna imagen'], 400);
-    }
-
     public function getUnidadesPadre() {
         $datos = DB::select("select * from tb_unidades u where u.activo = 1 and u.unidad_padre_id is null");
 

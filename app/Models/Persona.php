@@ -93,5 +93,5 @@ class Persona extends Model
         $db = DB::select('select * from tb_unidades u where u.activo = 1 and u.unidad_padre_id = :id', array('id' => $request->get('id')));
         
         return $db;
-     }
+    }
 }

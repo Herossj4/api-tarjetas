@@ -10,6 +10,7 @@ use App\Http\Controllers\RolController;
 use App\Http\Controllers\ListaController;
 use App\Http\Controllers\PersonaController;
 use App\Http\Controllers\UnidadesController;
+use App\Http\Controllers\TarjetasController;
 use App\Models\UsuarioRol;
 
 /*
@@ -52,7 +53,6 @@ Route::group(['prefix' => 'param'], function() {
     Route::get('persona', [PersonaController::class, 'getPersonas']);
     Route::post('persona/crearpersona', [PersonaController::class, 'CrearPersonas']);
     Route::post('persona/actualizarpersona', [PersonaController::class, 'actualizarPersona']);
-    Route::post('persona/upload', [PersonaController::class, 'upload']);
     Route::get('personas/obtenerunidadespadre', [PersonaController::class, 'getUnidadesPadre']);
     Route::post('personas/obtenerunidadeshijas', [PersonaController::class, 'getUnidadesHijas']);
 
@@ -74,15 +74,20 @@ Route::group(['prefix' => 'param'], function() {
     Route::post('lista/getListasByName', [ListaController::class, 'getListasName']);
 });
 
+Route::get('tarjetas',[TarjetasController::class,'GetTarjetas']);
+Route::post('tarjetas/getDatosPersona', [TarjetasController::class, 'GetPesonasData']);
+Route::post('tarjetas/crearTarjetas', [TarjetasController::class, 'CrearTarjetas']);
+Route::post('tarjetas/actualizarTarjetas', [TarjetasController::class, 'actualizarTarjeta']);
+Route::post('tarjetas/obtenerTarjetas', [TarjetasController::class, 'GetTarjetasByPersonaID']);
+
 // Route::get('hello', function() {
 //     $password = password_hash('0000', PASSWORD_BCRYPT, ['cost' => 15]);
 //     return $password;
 // });
 
 Route::post('prueba',function(Request $request){
-    $image = $request->file('image');
-    $path = $image->store('images', 'custom'); 
-    return $request + " " + $path;
+    $file = $request->file('acta');
+    $file->storeAs('D:\\', $request->get('acta_nombre'));
 });
 
 Route::get('/test-connection', function () {

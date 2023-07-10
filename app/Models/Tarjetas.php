@@ -31,7 +31,8 @@ class Tarjetas extends Model
         p.fecha_creacion,
         p.usuario_modificador,
         p.fecha_modificacion,
-        p.tipo_persona 
+        p.tipo_persona,
+        p.restringe_da
     from tb_personas p where tarjeta = 1');
         
         return $db;
@@ -47,9 +48,13 @@ class Tarjetas extends Model
         $datos = json_decode($request->modelo, true);
         if ($evento == 'C') {
             $id = $datos['persona_id'];
+            $restringe_da = $datos['restringe_da'] == true ? 1 : 0;
             DB::table('tb_personas')
                 ->where('persona_id', $id)
                 ->update(['tarjeta' => 1]);
+            DB::table('tb_personas')
+                ->where('persona_id', $id)
+                ->update(['restringe_da' => $restringe_da]);
             $tarjeta = new Tarjetas;
             $tarjeta->persona_id = $datos['persona_id'];
             $tarjeta->tipo_id = $datos['tipo_id'] == 0 ? null : $datos['tipo_id'];
@@ -73,18 +78,8 @@ class Tarjetas extends Model
                 if (!File::exists($folderPath)) {
                    File::makeDirectory($folderPath, 0755, true);
                 }
-            
-                //$archivo = $folderPath . '\\' . $acta_nombre . $file->getClientOriginalExtension();
                 $archivo = $acta_nombre .'.'. $file->getClientOriginalExtension();
                 $file->move($folderPath, $archivo);
-                            
-                //  if (file_exists($archivo)) {
-                //     File::delete($archivo);
-                //  }
-                    
-                //  $archivo_base64 = base64_decode($request->get('acta'));
-                //  file_put_contents($archivo, $archivo_base64);
-            
                  $tarjeta->ruta_acta = $archivo;
             }
 
@@ -98,9 +93,6 @@ class Tarjetas extends Model
             
                 $archivo = $reserva_nombre .'.'. $file->getClientOriginalExtension();
                 $file->move($folderPath, $archivo);
-                //  if (file_exists($archivo)) {
-                //     File::delete($archivo);
-                //  }
             
                  $tarjeta->ruta_reserva = $archivo;
             }
@@ -109,8 +101,12 @@ class Tarjetas extends Model
 
             return $tarjeta;
         } else if ($evento == 'U') {
-            \Log::info($datos['persona_id']);
-            $tarjeta = Tarjetas::find($request->tarjeta_id);
+            $id = $datos['persona_id'];
+            $restringe_da = $datos['restringe_da'] == true ? 1 : 0;
+            DB::table('tb_personas')
+                ->where('persona_id', $id)
+                ->update(['restringe_da' => $restringe_da]);
+            $tarjeta = Tarjetas::find($datos['tarjeta_id']);
             $tarjeta->persona_id = $datos['persona_id'];
             $tarjeta->tipo_id = $datos['tipo_id'] == 0 ? null : $datos['tipo_id'];
             $tarjeta->clasificacion_id = $datos['clasificacion_id'];
@@ -133,17 +129,8 @@ class Tarjetas extends Model
                 if (!File::exists($folderPath)) {
                    File::makeDirectory($folderPath, 0755, true);
                 }
-            
-                //$archivo = $folderPath . '\\' . $acta_nombre . $file->getClientOriginalExtension();
                 $archivo = $acta_nombre . $file->getClientOriginalExtension();
                 $file->move($folderPath, $archivo);
-                            
-                //  if (file_exists($archivo)) {
-                //     File::delete($archivo);
-                //  }
-                    
-                //  $archivo_base64 = base64_decode($request->get('acta'));
-                //  file_put_contents($archivo, $archivo_base64);
             
                  $tarjeta->ruta_acta = $archivo;
             }
@@ -157,11 +144,7 @@ class Tarjetas extends Model
                 }
             
                 $archivo = $reserva_nombre . $file->getClientOriginalExtension();
-                            
-                //  if (file_exists($archivo)) {
-                //     File::delete($archivo);
-                //  }
-            
+
                  $tarjeta->ruta_reserva = $archivo;
             }
 

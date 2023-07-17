@@ -39,7 +39,23 @@ class Tarjetas extends Model
     }
 
     public function GetPesonasData(Request $request) {
-        $db = DB::select('select * from tb_personas where numero_identificacion = :id', array('id' => $request->get('id')));
+        $db = DB::select('select p.persona_id,
+        p.numero_identificacion,
+        p.grado,
+        p.nombres,
+        p.apellidos,
+        p.imagen,
+        p.unidad,
+        (select u.nombre_unidad from tb_unidades u where u.unidad_id = p.unidad) nombre_unidad,
+        p.dependencia,
+        (select u.nombre_unidad from tb_unidades u where u.unidad_id = p.dependencia) nombre_dependencia,
+        p.cargo,
+        p.usuario_creador,
+        p.fecha_creacion,
+        p.usuario_modificador,
+        p.fecha_modificacion,
+        p.tipo_persona,
+        p.restringe_da from tb_personas p where numero_identificacion = :id', array('id' => $request->get('id')));
         
         return $db;
     }

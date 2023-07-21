@@ -175,5 +175,10 @@ class Tarjetas extends Model
         
         return $db;
     }
+
+    public function getTarjetaData($id){
+        $db = DB::select('select * from vw_tarjeta where tarjeta_id = :id', array('id' => $id));
+        return $db;
+    }
 }
  

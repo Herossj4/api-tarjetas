@@ -2,6 +2,8 @@
 
 use Illuminate\Support\Facades\Route;
 
+use App\Http\Controllers\TarjetaController;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -13,6 +15,5 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('tarjetas/imprimirCard/{id}', [TarjetaController::class, 'index']);
+Route::get('tarjetas/download/{id}', [TarjetaController::class, 'Download']);

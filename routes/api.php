@@ -55,6 +55,7 @@ Route::group(['prefix' => 'param'], function() {
     Route::post('persona/actualizarpersona', [PersonaController::class, 'actualizarPersona']);
     Route::get('personas/obtenerunidadespadre', [PersonaController::class, 'getUnidadesPadre']);
     Route::post('personas/obtenerunidadeshijas', [PersonaController::class, 'getUnidadesHijas']);
+    Route::get('personas/ObtenerUnidades', [PersonaController::class, 'getUnidades']);
 
     //Unidades
     Route::get('unidad', [UnidadesController::class, 'getUnidades']);

@@ -88,4 +88,36 @@ class PersonaController extends Controller
 
         return response()->json($response, 200);
     }
+
+    public function getUnidades() {
+        $datos = DB::select("SELECT unidad_id
+                            ,unidad_padre
+                            ,nombre_unidad
+                            ,denominacion
+                            ,ciudad
+                            ,direccion
+                            ,unidad_padre_id
+                            ,activo
+                            ,usuario_creador
+                            ,fecha_creacion
+                            ,usuario_modificador
+                            ,fecha_modificacion
+                            ,dependencia
+                            ,Unidad
+                            , CASE 
+                                WHEN CHARINDEX('-', Unidad) > 0 THEN SUBSTRING(Unidad, 1, CHARINDEX('-', Unidad) - 1)
+                                ELSE Unidad
+                            END AS unidad,
+                            CASE 
+                                WHEN CHARINDEX('-', Unidad) > 0 THEN SUBSTRING(Unidad, CHARINDEX('-', Unidad) + 1, LEN(Unidad))
+                                ELSE NULL
+                            END AS dependencia
+                            FROM Tarjetas_fac.dbo.vw_unidades
+                            ORDER BY 1, 2;");
+
+        $response = json_encode(array('result' => $datos, 'tipo' => 0), JSON_NUMERIC_CHECK);
+        $response = json_decode($response);
+
+        return response()->json($response, 200);
+    }
 }

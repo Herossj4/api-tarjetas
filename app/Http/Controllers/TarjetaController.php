@@ -14,8 +14,11 @@ class TarjetaController extends Controller
 
         $dat = $model->getTarjetaData($id);
         $datos = $dat[0];
-        $imagen = $datos->imagen;
-        $url = 'img/perfil/' . $imagen;
+        if($datos->imagen != null){
+            $url = 'img/perfil/' . $datos->imagen;
+        }else{
+            $url = 'img/foto.png';
+        }
         $clasificacion = $datos->clasificacion;
         $fondo="";
         if($clasificacion == 'naranja'){
@@ -59,7 +62,29 @@ class TarjetaController extends Controller
 
         $dat = $model->getTarjetaData($id);
         $datos = $dat[0];
-        $url = 'img/perfil/' . $datos->imagen;
+        if($datos->imagen != null){
+            $url = 'img/perfil/' . $datos->imagen;
+        }else{
+        $url = 'img/foto.png';
+        }
+        $clasificacion = $datos->clasificacion;
+        $fondo="";
+        if($clasificacion == 'naranja'){
+            $fondo = "img/img_restringido.png";
+        }else{
+            if($clasificacion == 'amarillo'){
+                $fondo = "img/img_secreto.png";
+            }
+            else{
+                if($clasificacion == 'verde'){
+                    $fondo = "img/img_ultrasecreto.png";
+                }else{
+                    if($clasificacion == 'rojo'){
+                        $fondo = "img/img_confidencial.png";
+                    }
+                }
+            }
+        }
         $CC = $datos->numero_identificacion;
         $data = [
             'num_autorizacion' => $datos->tarjeta_id,
@@ -72,7 +97,8 @@ class TarjetaController extends Controller
             'grado_sigla' => $datos->nombre_firma,
             'sigla_completo' => $datos->cargo_firma,
             'fecha_vigencia' => $datos->fecha_fin,
-            'perfil' => $url
+            'perfil' => $url,
+            'fondo' => $fondo
         ];
 
         $pdf = Pdf::loadView('tarjeta', $data);

@@ -105,11 +105,11 @@ class PersonaController extends Controller
                             ,dependencia
                             ,Unidad
                             , CASE 
-                                WHEN CHARINDEX('-', Unidad) > 0 THEN SUBSTRING(Unidad, 1, CHARINDEX('-', Unidad) - 1)
+                                WHEN CHARINDEX('/', Unidad) > 0 THEN SUBSTRING(Unidad, 1, CHARINDEX('/', Unidad) - 1)
                                 ELSE Unidad
                             END AS unidad,
                             CASE 
-                                WHEN CHARINDEX('-', Unidad) > 0 THEN SUBSTRING(Unidad, CHARINDEX('-', Unidad) + 1, LEN(Unidad))
+                                WHEN CHARINDEX('/', Unidad) > 0 THEN SUBSTRING(Unidad, CHARINDEX('/', Unidad) + 1, LEN(Unidad))
                                 ELSE NULL
                             END AS dependencia
                             FROM Tarjetas_fac.dbo.vw_unidades

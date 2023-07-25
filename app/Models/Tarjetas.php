@@ -145,10 +145,10 @@ class Tarjetas extends Model
                 if (!File::exists($folderPath)) {
                    File::makeDirectory($folderPath, 0755, true);
                 }
-                $archivo = $acta_nombre . $file->getClientOriginalExtension();
+                $archivo = $acta_nombre .'.'. $file->getClientOriginalExtension();
                 $file->move($folderPath, $archivo);
             
-                 $tarjeta->ruta_acta = $archivo;
+                $tarjeta->ruta_acta = $archivo;
             }
 
             if ($request->file('reserva')) {
@@ -159,9 +159,9 @@ class Tarjetas extends Model
                    File::makeDirectory($folderPath, 0755, true);
                 }
             
-                $archivo = $reserva_nombre . $file->getClientOriginalExtension();
-
-                 $tarjeta->ruta_reserva = $archivo;
+                $archivo = $reserva_nombre .'.'. $file->getClientOriginalExtension();
+                $file->move($folderPath, $archivo);
+                $tarjeta->ruta_reserva = $archivo;
             }
 
             $tarjeta->save();

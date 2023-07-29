@@ -112,7 +112,7 @@ class PersonaController extends Controller
                                 WHEN CHARINDEX('/', Unidad) > 0 THEN SUBSTRING(Unidad, CHARINDEX('/', Unidad) + 1, LEN(Unidad))
                                 ELSE NULL
                             END AS dependencia
-                            FROM Tarjetas_fac.dbo.vw_unidades
+                            FROM Tarjetas_fac.dbo.vw_unidades WHERE consultar = 1
                             ORDER BY 1, 2;");
 
         $response = json_encode(array('result' => $datos, 'tipo' => 0), JSON_NUMERIC_CHECK);

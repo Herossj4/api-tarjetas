@@ -28,7 +28,7 @@ class Persona extends Model
             $persona->usuario_creador = $request->get('usuario');
             $persona->fecha_creacion = DB::raw('GETDATE()');
 
-            if ($request->get('imagen')) {
+            if ($request->get('imagen') != null) {
                 $folderPath = public_path() . '/img/perfil';
                 if (!File::exists($folderPath)) {
                    File::makeDirectory($folderPath, 0755, true);

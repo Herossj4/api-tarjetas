@@ -180,5 +180,11 @@ class Tarjetas extends Model
         $db = DB::select('select * from vw_tarjeta where tarjeta_id = :id', array('id' => $id));
         return $db;
     }
+
+    public function GetDataView(Request $request){
+        $id = $request->get('id');
+        $db = DB::select('exec buscar_persona_siath ?', [$id]);
+        return $db;
+    }
 }
  

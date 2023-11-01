@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\MenuController;
@@ -18,6 +18,7 @@ use App\Models\UsuarioRol;
 | API Routes
 |--------------------------------------------------------------------------
 */
+
 Route::get('/banner', [HomeController::class, 'getBanner']);
 Route::get('/menu', [MenuController::class, 'getMenu']);
 Route::post('login', [LoginController::class, 'login']);
@@ -84,6 +85,10 @@ Route::post('tarjetas/crearTarjetas', [TarjetasController::class, 'CrearTarjetas
 Route::post('tarjetas/actualizarTarjetas', [TarjetasController::class, 'actualizarTarjeta']);
 Route::post('tarjetas/obtenerTarjetas', [TarjetasController::class, 'GetTarjetasByPersonaID']);
 Route::post('tarjetas/obtenerDatosView', [TarjetasController::class, 'GetDataView']);
+Route::get('tarjetas/getDatos/{id}', [TarjetasController::class, 'GetDatosView']);
+Route::post('tarjetas/obtenerUsuarioDA', [TarjetasController::class, 'GetUsuarioDA']);
+Route::post('tarjetas/buscarImagen', [TarjetasController::class, 'getbuscarImagen']);
+Route::get('tarjetas/guardarImagen', [TarjetasController::class, 'GetGuardarImagen']);
 
 // Route::get('hello', function() {
 //     $password = password_hash('0000', PASSWORD_BCRYPT, ['cost' => 15]);

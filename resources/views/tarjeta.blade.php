@@ -43,6 +43,7 @@
             left: 200px;
             width: 180px;
             text-align: center;
+            font-size: 9px;
         }
         .num_documento {
             position: absolute;
@@ -57,13 +58,15 @@
             left: 200px;
             width: 175px;
             text-align: center;
+            font-size: 9px;
         }
         .dependencia {
             position: absolute;
-            top: 200px;
+            top: 190px;
             left: 465px;
             width: 108px;
-            text-align: center
+            text-align: center;
+            font-size: 9px;
         }
         .grado_sigla {
             position: absolute;

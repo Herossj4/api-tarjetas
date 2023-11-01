@@ -27,6 +27,7 @@ class Persona extends Model
             $persona->cargo = $request->get('cargo');
             $persona->usuario_creador = $request->get('usuario');
             $persona->fecha_creacion = DB::raw('GETDATE()');
+            $persona->usuario_da = $request->get('usuario_da');
 
             if ($request->get('imagen') != null) {
                 $folderPath = public_path() . '/img/perfil';
@@ -61,6 +62,7 @@ class Persona extends Model
             $persona->cargo = $request->get('cargo');
             $persona->usuario_modificador = $request->get('usuario');
             $persona->fecha_modificacion = DB::raw('GETDATE()');
+            $persona->usuario_da = $request->get('usuario_da');
             $folderPath = public_path() . '/img/perfil';
             $foto = $folderPath . '/' . $request->get('tmp_numero_identificacion') . $request->get('tipo_imagen');
             

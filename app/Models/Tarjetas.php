@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Log;
 
 class Tarjetas extends Model
 {
@@ -79,7 +80,7 @@ class Tarjetas extends Model
             $tarjeta->fecha_fin = $datos['fecha_fin'];
             $tarjeta->nombre_firma = $datos['nombre_firma'];
             $tarjeta->cargo_firma = $datos['cargo_firma'];
-            $tarjeta->activo = $datos['activo'] == true ? 1 : 0;
+            $tarjeta->activo = 0;
             $tarjeta->usuario_creador = $datos['usuario'];
             $tarjeta->fecha_creacion = DB::raw('GETDATE()');
             $tarjeta->unidad = $datos['unidad'];
@@ -114,6 +115,13 @@ class Tarjetas extends Model
             }
 
             $tarjeta->save();
+
+            $fecha_i = $datos['fecha_inicio'];
+            $today = date('Y-m-d');
+            if($fecha_i == $today){
+                Log::info('entra');
+                DB::statement('EXEC activar_tarjeta');
+            }
 
             return $tarjeta;
         } else if ($evento == 'U') {

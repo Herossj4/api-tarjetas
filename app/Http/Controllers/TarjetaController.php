@@ -16,6 +16,11 @@ class TarjetaController extends Controller
         $datos = $dat[0];
         if($datos->imagen != null){
             $url = 'img/perfil/' . $datos->imagen;
+            if(is_readable($url)){
+                $url = 'img/perfil/' . $datos->imagen;
+            }else{
+                $url = 'img/foto.png';
+            }
         }else{
             $url = 'img/foto.png';
         }
@@ -37,6 +42,15 @@ class TarjetaController extends Controller
                 }
             }
         }
+        $vigencia = $datos->vigencia;
+        $tipo = $datos->tipo_id;
+        $v = "";
+        if($tipo == 2108){
+            $vigencia = $vigencia/30;
+            $v = $vigencia." meses";
+        }else{
+            $v = $vigencia." dias";
+        }
         $data = [
             'num_autorizacion' => $datos->tarjeta_id,
             'fecha_autorizacion' => $datos->fecha_inicio,
@@ -49,7 +63,8 @@ class TarjetaController extends Controller
             'sigla_completo' => $datos->cargo_firma,
             'fecha_vigencia' => $datos->fecha_fin,
             'perfil' => $url,
-            'fondo' => $fondo
+            'fondo' => $fondo,
+            'vigencia'=> $v
         ];
 
         $pdf = Pdf::loadView('tarjeta', $data);
@@ -64,8 +79,13 @@ class TarjetaController extends Controller
         $datos = $dat[0];
         if($datos->imagen != null){
             $url = 'img/perfil/' . $datos->imagen;
+            if(is_readable($url)){
+                $url = 'img/perfil/' . $datos->imagen;
+            }else{
+                $url = 'img/foto.png';
+            }
         }else{
-        $url = 'img/foto.png';
+            $url = 'img/foto.png';
         }
         $clasificacion = $datos->clasificacion;
         $fondo="";
@@ -86,6 +106,15 @@ class TarjetaController extends Controller
             }
         }
         $CC = $datos->numero_identificacion;
+        $tipo = $datos->tipo_id;
+        $vigencia = $datos->vigencia;
+        $v = "";
+        if($tipo == 2108){
+            $vigencia = $vigencia/30;
+            $v = $vigencia." meses";
+        }else{
+            $v = $vigencia." dias";
+        }
         $data = [
             'num_autorizacion' => $datos->tarjeta_id,
             'fecha_autorizacion' => $datos->fecha_inicio,
@@ -98,7 +127,8 @@ class TarjetaController extends Controller
             'sigla_completo' => $datos->cargo_firma,
             'fecha_vigencia' => $datos->fecha_fin,
             'perfil' => $url,
-            'fondo' => $fondo
+            'fondo' => $fondo,
+            'vigencia'=> $v
         ];
 
         $pdf = Pdf::loadView('tarjeta', $data);

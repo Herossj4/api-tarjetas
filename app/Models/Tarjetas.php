@@ -186,5 +186,11 @@ class Tarjetas extends Model
         $db = DB::select('exec buscar_persona_siath ?', [$id]);
         return $db;
     }
+
+    public function GetUsuarioDA(Request $request){
+        $id = $request->get('id');
+        $db = DB::select('exec buscar_usuario_da ?', [$id]);
+        return $db;
+    }
 }
  

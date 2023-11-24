@@ -12,6 +12,7 @@ use App\Http\Controllers\PersonaController;
 use App\Http\Controllers\UnidadesController;
 use App\Http\Controllers\TarjetasController;
 use App\Models\UsuarioRol;
+use Illuminate\Support\Facades\DB;
 
 /*
 |--------------------------------------------------------------------------
@@ -84,16 +85,12 @@ Route::post('tarjetas/crearTarjetas', [TarjetasController::class, 'CrearTarjetas
 Route::post('tarjetas/actualizarTarjetas', [TarjetasController::class, 'actualizarTarjeta']);
 Route::post('tarjetas/obtenerTarjetas', [TarjetasController::class, 'GetTarjetasByPersonaID']);
 Route::post('tarjetas/obtenerDatosView', [TarjetasController::class, 'GetDataView']);
+Route::post('tarjetas/obtenerUsuarioDA', [TarjetasController::class, 'GetUsuarioDA']);
 
 // Route::get('hello', function() {
 //     $password = password_hash('0000', PASSWORD_BCRYPT, ['cost' => 15]);
 //     return $password;
 // });
-
-Route::post('prueba',function(Request $request){
-    $file = $request->file('acta');
-    $file->storeAs('D:\\', $request->get('acta_nombre'));
-});
 
 Route::get('/test-connection', function () {
     try {

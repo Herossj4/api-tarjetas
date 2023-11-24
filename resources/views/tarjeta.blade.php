@@ -25,12 +25,13 @@
         .num_autorizacion {
             position: absolute;
             top: 65px;
-            left: 168px;
+            left: 188px;
+            text-align: center;
         }
         .fecha_autorizacion {
             position: absolute;
             top: 65px;
-            left: 298px;
+            left: 300px;
         }
         .grado {
             position: absolute;
@@ -40,9 +41,10 @@
         .apellido_nombre {
             position: absolute;
             top: 154px;
-            left: 200px;
-            width: 180px;
+            left: 170px;
+            width: 250px;
             text-align: center;
+            font-size:11px;
         }
         .num_documento {
             position: absolute;
@@ -54,30 +56,34 @@
         .cargo {
             position: absolute;
             top: 200px;
-            left: 200px;
-            width: 175px;
+            left: 135px;
+            width: 300px;
             text-align: center;
+            font-size: 10px;
         }
         .dependencia {
             position: absolute;
-            top: 200px;
-            left: 465px;
-            width: 108px;
-            text-align: center
+            top: 190px;
+            left: 430px;
+            width: 180px;
+            text-align: center;
+            font-size: 7.5px;
         }
         .grado_sigla {
             position: absolute;
             top: 244px;
-            left: 320px;
-            width: 185px;
+            left: 310px;
+            width: 195px;
             text-align: center;
+            font-size: 11px;
         }
         .sigla_completo {
             position: absolute;
-            top: 258px;
-            left: 320px;
-            width: 185px;
+            top: 263px;
+            left: 205px;
+            width: 400px;
             text-align: center;
+            font-size: 10px;
         }
 
         .profile {
@@ -93,6 +99,14 @@
             width: 50px;
             height: 50px;
             object-fit: cover;
+        }
+
+        .vigencia{
+            position: absolute;
+            top: 290px;
+            left: 440px;
+            text-align: center;
+            font-size: 10px;
         }
     </style>
 </head>
@@ -110,4 +124,5 @@
     <div class="profile">
         <img src="{{ $perfil }}">
     </div>
+    <div class="vigencia">{{ $vigencia }}</div>
 </body>

@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 
 class UsuarioRol extends Model
 {
@@ -47,6 +48,7 @@ class UsuarioRol extends Model
             $m->activo = $request->get('activo') == true ? 'S' : 'N';
             $m->usuario_modificador = $request->get('usuario');
             $m->fecha_modificacion = DB::raw('GETDATE()');
+            Log::info($m);
             $m->save();
 
             return $m;

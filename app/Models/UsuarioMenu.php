@@ -19,19 +19,6 @@ class UsuarioMenu extends Model
         'usuario_id,menu_id,usuario_creador,fecha_creacion,usuario_modificador,fecha_modificacion'
     ];
 
-    /*public function crud_usuarios_menu(Request $request, $evento) {
-        $db = DB::select("exec pr_crud_app_usuarios_menu ?,?,?,?,?,?",
-                        [
-                            $evento,
-                            $request->input('usuario_menu_id'),
-                            $request->input('usuario_id'),
-                            $request->input('menu_id'),
-                            $request->input('usuario_creador'),
-                            $request->input('usuario_modificador')
-                        ]);
-        return $db;
-    }*/
-
     public function getUsuarioMenu($usuario_id) {
         $db = DB::select("exec pr_get_usuarios_menu_id ?", array($usuario_id));
 
@@ -39,7 +26,7 @@ class UsuarioMenu extends Model
     }
 
     public function crud_usuarios_menu(Request $request) {
-        $db = \DB::select("exec pr_crud_asignar_menus ?,?,?",
+        $db = DB::select("exec pr_crud_asignar_menus ?,?,?",
                         [
                             $request->get('usuario_id'),
                             $request->get('menu_id'),
